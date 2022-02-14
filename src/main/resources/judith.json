@@ -1,0 +1,213 @@
+{
+  "description": "this file describes a neural net",
+  "name": "judith",
+  "created": "2015-06-22T10:06",
+  "comment": "inga_312_2015-06-22_1006",
+  "groups": {
+    "input": {
+      "description": "these neuron groups get light input",
+      "eye_width": 3,
+      "eye_height": 3,
+      "groups": {
+        "center": {"connections": [{
+          "weight": 196,
+          "to": ["output.forward"]
+        }]},
+        "cross": {
+          "groups": {
+            "left": {"connections": [
+              {
+                "weight": 200,
+                "to": ["output.turn.left"]
+              },
+              {
+                "weight": -110,
+                "to": ["output.turn.right"]
+              }
+            ]},
+            "right": {"connections": [
+              {
+                "weight": 186,
+                "to": ["output.turn.right"]
+              },
+              {
+                "weight": -114,
+                "to": ["output.turn.left"]
+              }
+            ]},
+            "up": {"connections": [
+              {
+                "weight": 192,
+                "to": ["output.turn.up"]
+              },
+              {
+                "weight": -104,
+                "to": ["output.turn.down"]
+              }
+            ]},
+            "down": {"connections": [
+              {
+                "weight": 207,
+                "to": ["output.turn.down"]
+              },
+              {
+                "weight": -98,
+                "to": ["output.turn.up"]
+              }
+            ]}
+          },
+          "connections": [{
+            "weight": 39,
+            "to": ["output.forward"]
+          }]
+        },
+        "corners": {
+          "groups": {
+            "upperleft": {"connections": [
+              {
+                "weight": 100,
+                "to": [
+                  "output.turn.left",
+                  "output.turn.up"
+                ]
+              },
+              {
+                "weight": -102,
+                "to": [
+                  "output.turn.right",
+                  "output.turn.down"
+                ]
+              }
+            ]},
+            "upperright": {"connections": [
+              {
+                "weight": 104,
+                "to": [
+                  "output.turn.right",
+                  "output.turn.up"
+                ]
+              },
+              {
+                "weight": -103,
+                "to": [
+                  "output.turn.left",
+                  "output.turn.down"
+                ]
+              }
+            ]},
+            "downleft": {"connections": [
+              {
+                "weight": 104,
+                "to": [
+                  "output.turn.left",
+                  "output.turn.down"
+                ]
+              },
+              {
+                "weight": -95,
+                "to": [
+                  "output.turn.right",
+                  "output.turn.up"
+                ]
+              }
+            ]},
+            "downright": {"connections": [
+              {
+                "weight": 106,
+                "to": [
+                  "output.turn.right",
+                  "output.turn.down"
+                ]
+              },
+              {
+                "weight": -103,
+                "to": [
+                  "output.turn.left",
+                  "output.turn.up"
+                ]
+              }
+            ]}
+          },
+          "connections": [{
+            "weight": 25,
+            "to": ["output.forward"]
+          }]
+        }
+      },
+      "connections": [{
+        "weight": 98,
+        "to": ["random.input"]
+      }]
+    },
+    "output": {
+      "description": "these neuron groups trigger movement",
+      "groups": {
+        "forward": {},
+        "turn": {"groups": {
+          "left": {"connections": [{
+            "weight": 54,
+            "to": ["random.decider.leftright"]
+          }]},
+          "right": {"connections": [{
+            "weight": 51,
+            "to": ["output.forward"]
+          }]},
+          "up": {"connections": [{
+            "weight": 56,
+            "to": ["output.forward"]
+          }]},
+          "down": {"connections": [{
+            "weight": 48,
+            "to": ["output.forward"]
+          }]}
+        }}
+      }
+    },
+    "random": {"groups": {
+      "input": {
+        "kind": "SupressRandomFire",
+        "max": 1000,
+        "connections": [{
+          "weight": 103,
+          "to": [
+            "output.forward",
+            "output.turn"
+          ]
+        }]
+      },
+      "decider": {"groups": {
+        "updown": {
+          "kind": "RandomFire",
+          "connections": [{
+            "weight": -80,
+            "to": [
+              "output.turn.up",
+              "output.turn.down"
+            ]
+          }]
+        },
+        "leftright": {
+          "kind": "RandomFire",
+          "connections": [{
+            "weight": -101,
+            "to": [
+              "output.turn.left",
+              "output.turn.right"
+            ]
+          }]
+        }
+      }},
+      "output": {
+        "kind": "SupressRandomFire",
+        "max": 1,
+        "connections": [{
+          "weight": 103,
+          "to": [
+            "output.forward",
+            "output.turn"
+          ]
+        }]
+      }
+    }}
+  }
+}

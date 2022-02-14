@@ -1,6 +1,7 @@
 plugins {
     // Apply the application plugin to add support for building a CLI application in Java.
     id 'application'
+    id 'com.github.johnrengelman.shadow' version '7.1.2'
 }
 
 repositories {
@@ -12,11 +13,58 @@ dependencies {
     // Use JUnit test framework.
     testImplementation 'junit:junit:4.13.2'
 
-    // This dependency is used by the application.
-    implementation 'com.google.guava:guava:30.1.1-jre'
+    // Using sfl4j allows us to replace different loggers later, if desired
+    implementation 'org.slf4j:slf4j-api:1.7.35'
+
+    // we use log4j2
+    implementation 'org.apache.logging.log4j:log4j-api:2.17.1'
+    implementation 'org.apache.logging.log4j:log4j-core:2.17.1'
+    implementation 'org.apache.logging.log4j:log4j-slf4j-impl:2.17.1'
+
+    // JSON parsing
+    implementation 'org.json:json:20211205'
+
+    // FIXME use piccolo
+    // command line parsing
+    implementation 'net.sf.jopt-simple:jopt-simple:6.0-alpha-3'
+
+
+    // gui framework
+    implementation('de.sciss:weblaf:2.2.1') {
+        exclude module: 'slf4j-simple'
+    }
+
+    // video production: original source for Monte Media Library: http://www.randelshofer.ch/monte/
+    implementation('com.pojosontheweb:monte-repack:1.0.1') {
+        exclude module: 'com.springsource.javax.media.jai.core'
+    }
+
 }
+
+description = 'a living world with neural nets that eat algae'
+ext.revision = 'git rev-list --count HEAD'.execute().text.trim()
+ext.hash = 'git rev-parse --short HEAD'.execute().text.trim()
+
+ext.implementationVersion = "0.3.${revision}_${hash}"
+
 
 application {
     // Define the main class for the application.
-    mainClass = 'com.meyling.zeubor.Main'
+    mainClass = 'com.meyling.zeubor.core.main.Main'
+}
+
+jar {
+    archiveVersion = "0.3.${revision}"
+    manifest {
+        attributes (
+                'Multi-Release': 'true',
+                'Specification-Title':    'Zeubor Reborn',
+                'Created-By':             'Kumi Zeubor',
+                'Specification-Vendor':   'Kumi Zeubor',
+                'Specification-Version':   archiveVersion,
+                'Implementation-Title':   'Zeubor Reborn',
+                'Implementation-Vendor':  'Kumi Zeubor',
+                'Implementation-Version': implementationVersion,
+        )
+    }
 }

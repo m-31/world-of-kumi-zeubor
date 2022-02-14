@@ -1,0 +1,123 @@
+package com.meyling.zeubor.core.gui;
+
+import com.alee.extended.behavior.ComponentMoveBehavior;
+import com.alee.extended.debug.TestFrame;
+import com.alee.extended.panel.GroupPanel;
+import com.alee.extended.panel.GroupingType;
+import com.alee.extended.statusbar.WebStatusBar;
+import com.alee.laf.WebLookAndFeel;
+import com.alee.laf.button.WebButton;
+import com.alee.laf.button.WebToggleButton;
+import com.alee.laf.label.WebLabel;
+import com.alee.laf.panel.WebPanel;
+import com.alee.laf.window.WebFrame;
+import com.alee.managers.notification.NotificationManager;
+import com.meyling.zeubor.core.common.Player;
+import com.meyling.zeubor.core.player.brain.AbstractBrainPlayer;
+import com.meyling.zeubor.core.world.World;
+
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.List;
+
+
+@SuppressWarnings("serial")
+public class MainWindow4 extends JFrame {
+
+    public static void main ( String[] args ) {
+        // You should work with UI (including installing L&F) inside Event Dispatch Thread (EDT)
+        SwingUtilities.invokeLater (new Runnable () {
+            public void run ()
+            {
+                // Install WebLaF as application L&F
+                WebLookAndFeel.install();
+//                WebLookAndFeel.setDecorateAllWindows (true);
+
+                
+                WebPanel panel = new WebPanel();
+                
+                
+                World world = Main.createWorld();
+                List<NewPlayerViewer> viewers = new ArrayList<NewPlayerViewer>();
+                for (Player player : world.getPlayers()) {
+                    NewPlayerViewer viewer = new NewPlayerViewer((AbstractBrainPlayer) player, world);
+                    viewers.add(viewer);
+                    world.addListener(viewer);
+                }
+                JComponent players1 = new GroupPanel(GroupingType.fillAll, 20, viewers.get(0), viewers.get(1), viewers.get(2));
+                JComponent players2 = new GroupPanel(GroupingType.fillAll, 20, viewers.get(3), viewers.get(4), viewers.get(5));
+
+                panel.add(new GroupPanel(GroupingType.fillAll, 20, false, players1, players2));
+
+                panel.add(createStatusBar(world), BorderLayout.SOUTH);
+                panel.setPreferredSize(new Dimension(820, 600));
+                world.start();
+                
+                TestFrame.show(panel, 10);
+            }
+        });
+    }
+    
+
+    public MainWindow4 () throws HeadlessException {
+        super("Example frame");
+        setIconImages(WebLookAndFeel.getImages());
+        setDefaultCloseOperation ( WebFrame.DISPOSE_ON_CLOSE);
+
+        new ComponentMoveBehavior(getRootPane (), this).install();
+//        add( new BorderPanel(new WebPanel(new VerticalFlowLayout(10, 10))));
+    }
+
+    public static WebStatusBar createStatusBar(final World world) {
+
+        // Window status bar
+        final WebStatusBar statusBar = new WebStatusBar();
+        
+        final WebToggleButton toggle = new WebToggleButton("running", true);
+        toggle.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                if (toggle.isSelected()) {
+                    toggle.setText("running");
+                    world.start();
+                } else {
+                    toggle.setText("stopped");
+                    world.stop();
+                }
+            }
+        });
+
+        statusBar.add(toggle); 
+        statusBar.addSpacing();
+
+        statusBar.add(new WebLabel("start new camera for: ") );
+
+        for (final Player player : world.getPlayers()) {
+            statusBar.addSpacing ();
+            statusBar.add(new WebButton(player.getCamera().getViewPoint().getName(), new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    (new CameraWindow(world, player, 800, 800)).setVisible(true);
+                }
+            }));
+        }
+        statusBar.addToEnd(new WebButton("zero", new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                (new CameraWindow(world, 800, 800)).setVisible(true);
+            }
+        }));
+            
+        statusBar.addToEnd(new WebButton("one", new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                (new CameraWindow(world, new double[] {0, 0, -1}, 800, 800)).setVisible(true);
+            }
+        }));
+            
+        NotificationManager.setMargin ( 0, 0, statusBar.getPreferredSize ().height, 0 );
+
+
+        return statusBar;
+    }
+
+}

@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+
+set -eufo pipefail
+
+DIR=$(cd "$(dirname "$0")" && pwd)
+cd "${DIR}"
+
+./gradlew shadowJar
+
+FAT_JAR=$(find ./build/libs/ -name "world-of-kumi-zeubor-*-all.jar" | sort -nr | head -1)
+if [[ ! -f "${FAT_JAR}" ]]; then
+  echo "no jar found in ./build/libs"
+  exit 1
+fi
+echo "starting ${FAT_JAR}"
+java -server -Xms2g -Xmx2g -XX:+UseParallelOldGC -XX:+HeapDumpOnOutOfMemoryError -jar "${FAT_JAR}" "$@"

@@ -1,0 +1,337 @@
+{
+  "description": "this file describes a neural net",
+  "name": "Ginny",
+  "created": "2015-06-03T18:00",
+  "comment": "a little more random even if we think we don't need it",
+  "groups": {
+    "input": {
+      "description": "these neuron groups get light input",
+      "eye_width": 3,
+      "eye_height": 3,
+      "groups" : {
+        "center": {
+          "connections": [
+            {
+              "weight" : 200,
+              "to": [
+                "output.forward"
+              ]
+            }
+          ]
+        },
+        "cross": { 
+          "groups" : {
+            "left": {
+              "connections": [
+                {
+                  "weight" : 200,
+                  "to": [
+                    "output.turn.left"
+                  ]
+                },
+                {
+                  "weight" : -100,
+                  "to": [
+                    "output.turn.right"
+                  ]
+                }
+              ]
+            },
+            "right": {
+              "connections": [
+                {
+                  "weight" : 200,
+                  "to": [
+                    "output.turn.right"
+                  ]
+                },
+                {
+                  "weight" : -100,
+                  "to": [
+                    "output.turn.left"
+                  ]
+                }
+              ]
+            },
+            "up": {
+              "connections": [
+                {
+                  "weight" : 200,
+                  "to": [
+                    "output.turn.up"
+                  ]
+                },
+                {
+                  "weight" : -100,
+                  "to": [
+                    "output.turn.down"
+                  ]
+                }
+              ]
+            },
+            "down": {
+              "connections": [
+                {
+                  "weight" : 200,
+                  "to": [
+                    "output.turn.down"
+                  ]
+                },
+                {
+                  "weight" : -100,
+                  "to": [
+                    "output.turn.up"
+                  ]
+                }
+              ]
+            }
+          },
+          "connections": [
+            {
+              "weight" : 40,
+              "to": [
+                "output.forward"
+              ]
+            }
+          ]
+        },
+        "corners": {
+          "groups" : {
+            "upperleft": {
+              "connections": [
+                {
+                  "weight" : 100,
+                  "to": [
+                    "output.turn.left",
+                    "output.turn.up"
+                  ]
+                },
+                {
+                  "weight" : -100,
+                  "to": [
+                    "output.turn.right",
+                    "output.turn.down"
+                  ]
+                }
+              ]
+            },
+            "upperright": {
+              "connections": [
+                {
+                  "weight" : 100,
+                  "to": [
+                    "output.turn.right",
+                    "output.turn.up"
+                  ]
+                },
+                {
+                  "weight" : -100,
+                  "to": [
+                    "output.turn.left",
+                    "output.turn.down"
+                  ]
+                }
+              ]
+            },
+            "downleft": {
+              "connections": [
+                {
+                  "weight" : 100,
+                  "to": [
+                    "output.turn.left",
+                    "output.turn.down"
+                  ]
+                },
+                {
+                  "weight" : -100,
+                  "to": [
+                    "output.turn.right",
+                    "output.turn.up"
+                  ]
+                }
+              ]
+            },
+            "downright": { 
+              "connections": [
+                {
+                  "weight" : 100,
+                  "to": [
+                    "output.turn.right",
+                    "output.turn.down"
+                  ]
+                },
+                {
+                  "weight" : -100,
+                  "to": [
+                    "output.turn.left",
+                    "output.turn.up"
+                  ]
+                }
+              ]
+            }
+          },
+          "connections": [
+            {
+              "weight" : 40,
+              "to": [
+                "output.forward"
+              ]
+            }
+          ]
+        }
+      },
+      "connections": [
+        {
+          "weight" : 100,
+          "to": [
+            "random.input"
+          ]
+        }
+      ]
+    },
+    "output": {
+      "description": "these neuron groups trigger movement",
+      "groups" : {
+        "forward": { 
+          "lowerThreshold": 100,
+          "upperThreshold": 10000,
+          "connections": [
+            {
+              "weight": 100,
+              "to": [
+                "counter.forward"
+              ]
+            }
+          ]
+        },
+        "turn": { 
+          "groups" : {
+            "left": {
+              "lowerThreshold": 100,
+              "upperThreshold": 10000,
+              "connections": [
+                {
+                  "weight": 50,
+                  "to": [
+                    "random.decider.leftright"
+                  ]
+                }
+              ]
+            },
+            "right": {
+              "lowerThreshold": 100,
+              "upperThreshold": 10000,
+              "connections": [
+                {
+                  "weight": 50,
+                  "to": [
+                    "output.forward"
+                  ]
+                }
+              ]
+            },
+            "up": {
+              "lowerThreshold": 100,
+              "upperThreshold": 10000,
+              "connections": [
+                {
+                  "weight": 50,
+                  "to": [
+                    "output.forward"
+                  ]
+                }
+              ]
+            },
+            "down": { 
+              "lowerThreshold": 100,
+              "upperThreshold": 10000,
+              "connections": [
+                {
+                  "weight": 50,
+                  "to": [
+                    "output.forward"
+                  ]
+                }
+              ]
+            }
+          }
+        }
+      }
+    },
+    "random": {
+      "groups" : {
+        "input": { 
+          "kind": "SupressRandomFire",
+          "max": 1000,
+          "connections": [
+            {
+              "weight":  100,
+              "to": [
+                "output.forward",
+                "output.turn"
+              ]
+            }
+          ]
+        },
+        "decider": {
+          "groups" : {
+            "updown": { 
+              "kind": "RandomFire",
+              "connections": [
+                {
+                  "weight": -100,
+                  "to": [
+                    "output.turn.up",
+                    "output.turn.down"
+                  ]
+                }
+              ]
+            },
+            "leftright": { 
+              "kind": "RandomFire",
+              "connections": [
+                {
+                  "weight": -100,
+                  "to": [
+                    "output.turn.left",
+                    "output.turn.right"
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        "output": { 
+          "kind": "SupressRandomFire",
+          "max": 1,
+          "connections": [
+            {
+              "weight":  100,
+              "to": [
+                "output.forward",
+                "output.turn"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "counter": {
+      "groups" : {
+        "forward": { 
+          "comment": "move forward if we hadn't for 2 cycles",
+          "kind": "Counter",
+          "max": 2000,
+          "connections": [
+            {
+              "weight":  100,
+              "to": [
+                "output.forward"
+              ]
+            }
+          ]
+        }
+      }
+    }
+  }
+}

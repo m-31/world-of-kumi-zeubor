@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="warn" strict="true" name="XMLConfig" packages="org.apache.logging.log4j.test">
+
+    <Properties>
+        <Property name="HIGHLIGHT">%d (%highlight{%-5p}{STYLE=Logback}) [%-10t] - %highlight{%m%n}{STYLE=Logback}</Property>
+        <Property name="NORMAL">%d (%-5p) [%-10t] %-30.30c{1.} - %m%n</Property>
+        <Property name="CONSOLE">%m%n</Property>
+    </Properties>
+
+    <Appenders>
+        <Appender type="Console" name="STDOUT_JOURNAL">
+            <Layout type="PatternLayout" pattern="${CONSOLE}"/>
+            <Filters>
+                <Filter type="MarkerFilter" marker="JOURNAL" onMatch="ACCEPT"/>
+            </Filters>
+        </Appender>
+        <Appender type="Console" name="STDOUT_APPLICATION">
+            <Layout type="PatternLayout" pattern="${CONSOLE}"/>
+            <Filters>
+                <Filter type="MarkerFilter" marker="APPLICATION" onMatch="ACCEPT"/>
+            </Filters>
+        </Appender>
+        <Appender type="Console" name="STDOUT_ERROR">
+            <Layout type="PatternLayout" pattern="${HIGHLIGHT}"/>
+            <Filters>
+                <Filter type="MarkerFilter" marker="ERROR" onMatch="ACCEPT"/>
+            </Filters>
+        </Appender>
+        <Appender type="RollingFile" name="JOURNAL" fileName="logs/journal.log"
+                  filePattern="logs//journal-%d{yyyy-MM-dd-HH}-%i.log.gz">
+            <Layout type="PatternLayout" pattern="%d %m%n"/>
+            <Filter type="MarkerFilter" marker="JOURNAL" onMatch="ACCEPT"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy interval="6" modulate="true"/>
+                <SizeBasedTriggeringPolicy size="250 MB"/>
+            </Policies>
+        </Appender>
+        <Appender type="RollingFile" name="APPLICATION" fileName="logs/application.log"
+                  filePattern="logs//application-%d{yyyy-MM-dd-HH}-%i.log.gz">
+            <Layout type="PatternLayout" pattern="${NORMAL}"/>
+            <Filters>
+                <Filter type="MarkerFilter" marker="APPLICATION" onMatch="ACCEPT" onMismatch="NEUTRAL"/>
+                <Filter type="MarkerFilter" marker="ERROR" onMatch="ACCEPT"/>
+            </Filters>
+            <Policies>
+                <TimeBasedTriggeringPolicy interval="6" modulate="true"/>
+                <SizeBasedTriggeringPolicy size="250 MB"/>
+            </Policies>
+        </Appender>
+        <Appender type="RollingFile" name="ERROR" fileName="logs/error.log"
+                  filePattern="logs//error-%d{yyyy-MM-dd-HH}-%i.log.gz">
+            <Layout type="PatternLayout" pattern="${NORMAL}"/>
+            <Filter type="MarkerFilter" marker="ERROR" onMatch="ACCEPT"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy interval="6" modulate="true"/>
+                <SizeBasedTriggeringPolicy size="250 MB"/>
+            </Policies>
+        </Appender>
+
+    </Appenders>
+
+    <Loggers>
+        <Root level="trace">
+            <AppenderRef ref="STDOUT_JOURNAL" level="info"/>
+            <AppenderRef ref="STDOUT_ERROR" level="error"/>
+            <AppenderRef ref="STDOUT_APPLICATION" level="debug"/>
+            <AppenderRef ref="JOURNAL" level="info"/>
+            <AppenderRef ref="APPLICATION" level="debug"/>
+            <AppenderRef ref="ERROR" level="warn"/>
+        </Root>
+    </Loggers>
+
+</Configuration>
