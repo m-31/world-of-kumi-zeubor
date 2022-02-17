@@ -1,6 +1,5 @@
 package com.meyling.zeubor.core.nerve.brain;
 
-import com.meyling.zeubor.core.nerve.SimplePotentialCalculator;
 import com.meyling.zeubor.core.nerve.basis.*;
 
 import java.util.ArrayList;
