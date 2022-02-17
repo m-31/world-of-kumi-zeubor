@@ -17,7 +17,7 @@
  */
 package com.meyling.zeubor.core.player.brain;
 
-import com.meyling.zeubor.core.nerve.BrainImpl9;
+import com.meyling.zeubor.core.nerve.brain.BrainImpl9;
 
 public class BrainPlayer9 extends AbstractBrainPlayer {
     

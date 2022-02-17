@@ -1,23 +1,22 @@
-package com.meyling.zeubor.core.nerve;
+package com.meyling.zeubor.core.nerve.brain;
 
 import java.util.List;
 
 /**
  * Encapsulates a neural net and manages interplay with sensors and muscles. 
  */
-public final class BrainImpl7 extends AbstractBrain5Output {
+public final class BrainImpl10 extends AbstractBrain5Output {
 
     private final static double LOW_RANDOM = 0.01;
     
     private double random;
     
 
-    public BrainImpl7() {
+    public BrainImpl10() {
         super();
         random = LOW_RANDOM;
     }
-
-  
+ 
     /**
      * Grow nerve net according to genom.
      *
@@ -56,10 +55,64 @@ public final class BrainImpl7 extends AbstractBrain5Output {
         for (int i = 0; i < outputNumber; i++) {
             getOutputNeurons().add(createNeuron());
         }
+
+        // random output if no input there
+        getRandomNeurons().add(createSupressRandomFireNeuron(1000));
+        for (int i = 0; i < inputNumber; i++) {
+            int weight = 100;
+            getRandomNeurons().get(0).addDentrite(getInputNeurons().get(i), weight);
+        }    
+        for (int i = 0; i < outputNumber; i++) {
+            int weight = 100;
+            if (i != 2) {
+                getOutputNeurons().get(i).addDentrite(getRandomNeurons().get(0), weight);
+            }
+        }    
+
+        // decide between up and down
+        getRandomNeurons().add(createRandomFireNeuron());
+        {
+            getOutputNeurons().get(0).addDentrite(getRandomNeurons().get(1), -100);
+            getRandomNeurons().get(1).addDentrite(getOutputNeurons().get(0), 50);
+            getOutputNeurons().get(4).addDentrite(getRandomNeurons().get(1), -100);
+            getRandomNeurons().get(1).addDentrite(getOutputNeurons().get(4), 50);
+        } 
+
+        // decide between left and right
+        getRandomNeurons().add(createRandomFireNeuron());
+        {    
+            getOutputNeurons().get(1).addDentrite(getRandomNeurons().get(2), -100);
+            getRandomNeurons().get(2).addDentrite(getOutputNeurons().get(1), 50);
+            getOutputNeurons().get(3).addDentrite(getRandomNeurons().get(2), -100);
+            getRandomNeurons().get(2).addDentrite(getOutputNeurons().get(3), 50);
+        }
+
+        // flip coin to go forward if decision has to be made between up and down
+        getRandomNeurons().add(createFireRandomNeuron(0.5));
+        {
+            getOutputNeurons().get(2).addDentrite(getRandomNeurons().get(3), 100);
+            getRandomNeurons().get(3).addDentrite(getOutputNeurons().get(0), 50);
+            getRandomNeurons().get(3).addDentrite(getOutputNeurons().get(4), 50);
+        } 
+        
+        // flip coin to go forward if decision has to be made between left and right
+        getRandomNeurons().add(createFireRandomNeuron(0.5));
+        {
+            getOutputNeurons().get(2).addDentrite(getRandomNeurons().get(4), 100);
+            getRandomNeurons().get(4).addDentrite(getOutputNeurons().get(1), 50);
+            getRandomNeurons().get(4).addDentrite(getOutputNeurons().get(3), 50);
+        } 
+        
+        // move forward if we hadn't for 2 cycles 
+        getRandomNeurons().add(createCounterNeuron(2));
+        {
+            getRandomNeurons().get(5).addDentrite(getOutputNeurons().get(2), 100);
+            getOutputNeurons().get(2).addDentrite(getRandomNeurons().get(5), 100);
+        }
+        
         {
             int weight = 200;
             outputInput(2, 4, weight);
-
         }
         {
             int weight = 200;
@@ -128,17 +181,20 @@ public final class BrainImpl7 extends AbstractBrain5Output {
             getOutputNeurons().get(4).setHigherThreshold(threshold);
         }    
    }
-    
+
     public void iterate() {
+/*        
         // random noise
         for (int i = 0; i < getInputNeurons().size(); i++) {
             if (Math.random() < random) {
                 getInputNeurons().get(i).setFire(!getInputNeurons().get(i).getFire());
             }
         }
+*/        
+//        printOutput();
         super.iterate();
     }
-    
+
     public void increaseRandom() {
         random = random * 3;
     }

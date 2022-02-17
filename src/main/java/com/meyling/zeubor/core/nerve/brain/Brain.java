@@ -1,4 +1,4 @@
-package com.meyling.zeubor.core.nerve;
+package com.meyling.zeubor.core.nerve.brain;
 
 import com.meyling.zeubor.core.nerve.basis.Neuron;
 

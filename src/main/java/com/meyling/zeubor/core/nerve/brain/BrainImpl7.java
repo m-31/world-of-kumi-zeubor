@@ -1,24 +1,23 @@
-package com.meyling.zeubor.core.nerve;
+package com.meyling.zeubor.core.nerve.brain;
 
 import java.util.List;
 
 /**
- * Encapsulates a neuronal net and manages interplay with sensors and muscles. 
- * 
- * TODO based on NeuronalNet3
- * 
+ * Encapsulates a neural net and manages interplay with sensors and muscles. 
  */
-public final class BrainImpl6 extends AbstractBrain5Output {
+public final class BrainImpl7 extends AbstractBrain5Output {
 
     private final static double LOW_RANDOM = 0.01;
+    
     private double random;
     
 
-    public BrainImpl6() {
+    public BrainImpl7() {
         super();
         random = LOW_RANDOM;
     }
- 
+
+  
     /**
      * Grow nerve net according to genom.
      *
@@ -28,29 +27,29 @@ public final class BrainImpl6 extends AbstractBrain5Output {
      *  (0, 0) number of application neurons per layer, number of layers
      * 
      */
-    public void grow(List<List<Integer>> genom) {
+   public void grow(List<List<Integer>> genom) {
         System.out.println("grow neuronal net");
-       
+        
         printGenom(genom);
-       
+        
         getInputNeurons().clear();
         getOutputNeurons().clear();
         getGlias().clear();
-       
+        
         setEyeWidth(genom.get(0).get(0));
         setEyeHeight(genom.get(0).get(1));
         int inputNumber = getEyeWidth() * getEyeHeight();
         int outputNumber = genom.get(1).get(0);
-       
-        // create getInputNeurons() layer neurons
+        
+        // create input layer neurons
         //  0 1 2 
         //  3 4 5
         //  6 7 8
         for (int i = 0; i < inputNumber; i++) {
-           getInputNeurons().add(createNeuron());
+            getInputNeurons().add(createNeuron());
         }
 
-        // create getOutputNeurons() layer neurons
+        // create output layer neurons
         //     0  
         //   1 2 3
         //     4 
@@ -70,16 +69,36 @@ public final class BrainImpl6 extends AbstractBrain5Output {
             outputInput(4, 7, weight);
         }   
         {
-            int weight = -101;
+            int weight = 40;
+            outputInput(2, 1, weight);
+            outputInput(2, 3, weight);
+            outputInput(2, 5, weight);
+            outputInput(2, 7, weight);
+        }   
+        {
+            int weight = 40;
+            outputInput(2, 0, weight);
+            outputInput(2, 2, weight);
+            outputInput(2, 6, weight);
+            outputInput(2, 8, weight);
+        }
+        {
+            int weight = -100;
             outputInput(4, 1, weight);
             outputInput(3, 3, weight);
             outputInput(1, 5, weight);
             outputInput(0, 7, weight);
         }   
         {
-            int weight = -101;
-//            output.get(4).addDentrite(input.get(0), weight);
-//            output.get(4).addDentrite(input.get(2), weight);
+            int weight = -100;
+            outputInput(4, 0, weight);
+            outputInput(3, 0, weight);
+            outputInput(1, 2, weight);
+            outputInput(4, 2, weight);
+            outputInput(0, 6, weight);
+            outputInput(3, 6, weight);
+            outputInput(0, 8, weight);
+            outputInput(1, 8, weight);
         }   
         {
             int weight = 100;
@@ -121,7 +140,7 @@ public final class BrainImpl6 extends AbstractBrain5Output {
     }
     
     public void increaseRandom() {
-        random = random * 2;
+        random = random * 3;
     }
 
     public void resetRandom() {

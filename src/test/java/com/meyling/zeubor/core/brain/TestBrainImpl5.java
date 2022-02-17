@@ -1,12 +1,19 @@
-package com.meyling.zeubor.core.nerve;
+package com.meyling.zeubor.core.brain;
+
+import com.meyling.zeubor.core.nerve.brain.Brain;
+import com.meyling.zeubor.core.nerve.brain.BrainImpl5;
+import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.junit.Assert.assertEquals;
+
 public final class TestBrainImpl5 {
 
+    @Test
+    public void iteratesCorrectly() {
 
-    public static void main(String[] argv) {
         Brain brain = getBrain();
         
         // 0 1 2
@@ -15,18 +22,33 @@ public final class TestBrainImpl5 {
         
         brain.getInputNeurons().get(1).setFire(true);
         step(brain);
-        
+        assertEquals(0, brain.getDirectionX());
+        assertEquals(1, brain.getDirectionY());
+        assertEquals(0, brain.getSpeed());
+
         brain.getInputNeurons().get(7).setFire(true);
         step(brain);
+        assertEquals(0, brain.getDirectionX());
+        assertEquals(-1, brain.getDirectionY());
+        assertEquals(0, brain.getSpeed());
 
         brain.getInputNeurons().get(3).setFire(true);
         step(brain);
+        assertEquals(-1, brain.getDirectionX());
+        assertEquals(0, brain.getDirectionY());
+        assertEquals(0, brain.getSpeed());
 
         brain.getInputNeurons().get(5).setFire(true);
         step(brain);
+        assertEquals(1, brain.getDirectionX());
+        assertEquals(0, brain.getDirectionY());
+        assertEquals(0, brain.getSpeed());
 
         brain.getInputNeurons().get(4).setFire(true);
         step(brain);
+        assertEquals(0, brain.getDirectionX());
+        assertEquals(0, brain.getDirectionY());
+        assertEquals(1, brain.getSpeed());
 
         brain.getInputNeurons().get(1).setFire(true);
         brain.getInputNeurons().get(7).setFire(true);
@@ -36,6 +58,9 @@ public final class TestBrainImpl5 {
             brain.getInputNeurons().get(i).setFire(true);
         }
         step(brain);
+        assertEquals(0, brain.getDirectionX());
+        assertEquals(0, brain.getDirectionY());
+        assertEquals(1, brain.getSpeed());
     }
 
     private static void step(Brain brain) {

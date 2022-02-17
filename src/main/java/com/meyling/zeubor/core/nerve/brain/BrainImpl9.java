@@ -1,18 +1,18 @@
-package com.meyling.zeubor.core.nerve;
+package com.meyling.zeubor.core.nerve.brain;
 
 import java.util.List;
 
 /**
  * Encapsulates a neural net and manages interplay with sensors and muscles. 
  */
-public final class BrainImpl8 extends AbstractBrain5Output {
+public final class BrainImpl9 extends AbstractBrain5Output {
 
     private final static double LOW_RANDOM = 0.01;
-
+    
     private double random;
     
 
-    public BrainImpl8() {
+    public BrainImpl9() {
         super();
         random = LOW_RANDOM;
     }
@@ -125,8 +125,8 @@ public final class BrainImpl8 extends AbstractBrain5Output {
             getOutputNeurons().get(3).setHigherThreshold(threshold);
             getOutputNeurons().get(4).setHigherThreshold(threshold);
         }    
-    }
-    
+   }
+
     public void iterate() {
         // random noise
         for (int i = 0; i < getInputNeurons().size(); i++) {
@@ -136,7 +136,7 @@ public final class BrainImpl8 extends AbstractBrain5Output {
         }
         super.iterate();
     }
-    
+
     public void increaseRandom() {
         random = random * 3;
     }
