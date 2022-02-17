@@ -40,7 +40,7 @@ public class MainWindow4 extends JFrame {
                 WebPanel panel = new WebPanel();
                 
                 
-                World world = Main.createWorld();
+                World world = CreateWorldForMainWindow4.createWorld();
                 List<NewPlayerViewer> viewers = new ArrayList<NewPlayerViewer>();
                 for (Player player : world.getPlayers()) {
                     NewPlayerViewer viewer = new NewPlayerViewer((AbstractBrainPlayer) player, world);
