@@ -19,8 +19,8 @@ package com.meyling.zeubor.core.player.brain;
 
 import com.meyling.zeubor.core.common.Movement;
 import com.meyling.zeubor.core.common.Picture;
-import com.meyling.zeubor.core.nerve.brain.Brain;
-import com.meyling.zeubor.core.nerve.basis.Neuron;
+import com.meyling.zeubor.core.biology.brain.Brain;
+import com.meyling.zeubor.core.biology.nerve.Neuron;
 import com.meyling.zeubor.core.player.AbstractPlayer;
 
 import java.awt.*;

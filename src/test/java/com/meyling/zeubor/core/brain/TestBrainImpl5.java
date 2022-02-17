@@ -1,7 +1,7 @@
 package com.meyling.zeubor.core.brain;
 
-import com.meyling.zeubor.core.nerve.brain.Brain;
-import com.meyling.zeubor.core.nerve.brain.BrainImpl5;
+import com.meyling.zeubor.core.biology.brain.Brain;
+import com.meyling.zeubor.core.biology.brain.BrainImpl5;
 import org.junit.Test;
 
 import java.util.ArrayList;

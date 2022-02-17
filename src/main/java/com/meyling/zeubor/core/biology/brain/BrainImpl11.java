@@ -1,7 +1,7 @@
-package com.meyling.zeubor.core.nerve.brain;
+package com.meyling.zeubor.core.biology.brain;
 
-import com.meyling.zeubor.core.nerve.basis.Dendrite;
-import com.meyling.zeubor.core.nerve.basis.Neuron;
+import com.meyling.zeubor.core.biology.nerve.Dendrite;
+import com.meyling.zeubor.core.biology.nerve.Neuron;
 import org.json.JSONArray;
 import org.json.JSONObject;
 

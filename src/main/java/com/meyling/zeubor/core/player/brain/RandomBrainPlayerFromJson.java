@@ -17,7 +17,7 @@
  */
 package com.meyling.zeubor.core.player.brain;
 
-import com.meyling.zeubor.core.nerve.brain.RandomBrainFromJson;
+import com.meyling.zeubor.core.biology.brain.RandomBrainFromJson;
 
 public class RandomBrainPlayerFromJson extends AdvancedAbstractBrainPlayer {
     

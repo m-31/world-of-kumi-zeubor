@@ -1,9 +1,9 @@
-package com.meyling.zeubor.core.nerve.brain;
+package com.meyling.zeubor.core.biology.brain;
 
-import com.meyling.zeubor.core.nerve.basis.Dendrite;
-import com.meyling.zeubor.core.nerve.basis.Glia;
-import com.meyling.zeubor.core.nerve.basis.Neuron;
-import com.meyling.zeubor.core.nerve.basis.PotentialCalculator;
+import com.meyling.zeubor.core.biology.nerve.Dendrite;
+import com.meyling.zeubor.core.biology.nerve.Glia;
+import com.meyling.zeubor.core.biology.nerve.Neuron;
+import com.meyling.zeubor.core.biology.nerve.PotentialCalculator;
 
 import java.util.List;
 

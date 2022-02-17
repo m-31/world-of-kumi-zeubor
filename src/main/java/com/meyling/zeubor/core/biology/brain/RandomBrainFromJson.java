@@ -1,4 +1,4 @@
-package com.meyling.zeubor.core.nerve.brain;
+package com.meyling.zeubor.core.biology.brain;
 
 import com.meyling.zeubor.core.io.IoUtility;
 import com.meyling.zeubor.core.log.Log;

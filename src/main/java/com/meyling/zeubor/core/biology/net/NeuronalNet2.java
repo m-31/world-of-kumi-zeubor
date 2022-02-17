@@ -1,9 +1,9 @@
-package com.meyling.zeubor.core.nerve;
+package com.meyling.zeubor.core.biology.net;
 
-import com.meyling.zeubor.core.nerve.basis.Axon;
-import com.meyling.zeubor.core.nerve.basis.Dendrite;
-import com.meyling.zeubor.core.nerve.basis.Glia;
-import com.meyling.zeubor.core.nerve.basis.Neuron;
+import com.meyling.zeubor.core.biology.nerve.Axon;
+import com.meyling.zeubor.core.biology.nerve.Dendrite;
+import com.meyling.zeubor.core.biology.nerve.Glia;
+import com.meyling.zeubor.core.biology.nerve.Neuron;
 
 import java.util.ArrayList;
 import java.util.List;

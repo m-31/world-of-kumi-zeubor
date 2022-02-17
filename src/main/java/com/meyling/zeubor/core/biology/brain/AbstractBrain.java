@@ -1,6 +1,6 @@
-package com.meyling.zeubor.core.nerve.brain;
+package com.meyling.zeubor.core.biology.brain;
 
-import com.meyling.zeubor.core.nerve.basis.*;
+import com.meyling.zeubor.core.biology.nerve.*;
 
 import java.util.ArrayList;
 import java.util.List;
