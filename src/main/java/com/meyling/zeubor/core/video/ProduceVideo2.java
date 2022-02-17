@@ -13,7 +13,7 @@ package com.meyling.zeubor.core.video;
 
 import com.meyling.zeubor.core.physics.CalculatorUtility;
 import com.meyling.zeubor.core.player.basis.AbstractPlayer;
-import com.meyling.zeubor.core.world.PlayerCreator;
+import com.meyling.zeubor.core.player.creator.PlayerCreator;
 import com.meyling.zeubor.core.world.World;
 import org.monte.media.Format;
 import org.monte.media.avi.AVIWriter;

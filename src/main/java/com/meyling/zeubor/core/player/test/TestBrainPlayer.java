@@ -1,9 +1,11 @@
-package com.meyling.zeubor.core.world;
+package com.meyling.zeubor.core.player.test;
 
 import com.meyling.zeubor.core.common.Context;
 import com.meyling.zeubor.core.io.IoUtility;
+import com.meyling.zeubor.core.player.creator.PlayerCreator;
 import com.meyling.zeubor.core.player.basis.AbstractPlayer;
 import com.meyling.zeubor.core.player.basis.AbstractPlayerCreator;
+import com.meyling.zeubor.core.world.World;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -12,9 +14,6 @@ import java.net.InetAddress;
 import java.net.UnknownHostException;
 
 
-/**
- * ## Just prototyping main processes.
- */
 public class TestBrainPlayer {
 
     /**

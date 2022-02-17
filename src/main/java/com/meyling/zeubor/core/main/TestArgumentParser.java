@@ -19,7 +19,7 @@ package com.meyling.zeubor.core.main;
 
 import com.meyling.zeubor.core.io.IoUtility;
 import com.meyling.zeubor.core.log.Log;
-import com.meyling.zeubor.core.world.TestBrainPlayer;
+import com.meyling.zeubor.core.player.test.TestBrainPlayer;
 import joptsimple.OptionException;
 import joptsimple.OptionSet;
 import org.apache.logging.log4j.Level;

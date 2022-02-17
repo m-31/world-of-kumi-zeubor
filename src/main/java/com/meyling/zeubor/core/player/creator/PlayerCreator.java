@@ -1,4 +1,4 @@
-package com.meyling.zeubor.core.world;
+package com.meyling.zeubor.core.player.creator;
 
 import com.meyling.zeubor.core.io.IoUtility;
 import com.meyling.zeubor.core.io.IoUtility.StringData;

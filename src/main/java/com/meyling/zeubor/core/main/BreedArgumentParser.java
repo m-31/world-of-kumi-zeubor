@@ -18,7 +18,7 @@
 package com.meyling.zeubor.core.main;
 
 import com.meyling.zeubor.core.io.IoUtility;
-import com.meyling.zeubor.core.world.EvolveBrainPlayer;
+import com.meyling.zeubor.core.player.evolution.EvolveBrainPlayer;
 import joptsimple.OptionException;
 import joptsimple.OptionSet;
 
