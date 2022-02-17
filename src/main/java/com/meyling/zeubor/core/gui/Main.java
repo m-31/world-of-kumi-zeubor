@@ -2,7 +2,7 @@ package com.meyling.zeubor.core.gui;
 
 import com.meyling.zeubor.core.io.IoUtility;
 import com.meyling.zeubor.core.physics.CalculatorUtility;
-import com.meyling.zeubor.core.player.AbstractPlayer;
+import com.meyling.zeubor.core.player.basis.AbstractPlayer;
 import com.meyling.zeubor.core.player.brain.AbstractBrainPlayer;
 import com.meyling.zeubor.core.player.brain.BrainPlayer7;
 import com.meyling.zeubor.core.player.brain.BrainPlayerFromJson;

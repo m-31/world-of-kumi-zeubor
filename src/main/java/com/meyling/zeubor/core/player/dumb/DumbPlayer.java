@@ -2,7 +2,7 @@ package com.meyling.zeubor.core.player.dumb;
 
 import com.meyling.zeubor.core.common.Movement;
 import com.meyling.zeubor.core.common.Picture;
-import com.meyling.zeubor.core.player.AbstractPlayer;
+import com.meyling.zeubor.core.player.basis.AbstractPlayer;
 
 import java.awt.*;
 

@@ -1,4 +1,4 @@
-package com.meyling.zeubor.core.world;
+package com.meyling.zeubor.core.physics;
 
 import com.meyling.zeubor.core.common.Camera;
 import com.meyling.zeubor.core.common.PhotoPlate;
@@ -8,7 +8,7 @@ import com.meyling.zeubor.core.physics.PhotoPlateImpl;
 /**
  * Camera. Has a position, orientation and a photo plate.
  */
-public final class CameraImpl implements Camera{
+public final class CameraImpl implements Camera {
 
     private final PhotoPlateImpl photoPlate;
 

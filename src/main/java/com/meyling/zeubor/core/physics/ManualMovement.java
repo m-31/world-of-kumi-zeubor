@@ -1,9 +1,11 @@
-package com.meyling.zeubor.core.gui;
+package com.meyling.zeubor.core.physics;
 
 import com.meyling.zeubor.core.common.Camera;
 import com.meyling.zeubor.core.common.CameraMover;
 import com.meyling.zeubor.core.common.ViewPoint;
 import com.meyling.zeubor.core.physics.CalculatorUtility;
+
+import static com.meyling.zeubor.core.physics.CalculatorUtility.rotate;
 
 
 /**
@@ -73,23 +75,6 @@ public class ManualMovement implements CameraMover {
 
     public void pointToZero(final ViewPoint viewPoint) {
         CalculatorUtility.pointToZero(getZero(), viewPoint);
-    }
-
-    private void rotate(double ztheta, final double[] x, final double[] y) {
-        // rotate around z axis
-        double ct = Math.cos(ztheta);
-        double st = Math.sin(ztheta);
-
-        double[] xn = new double[3];
-        for (int i = 0; i < 3; i++) {
-            xn[i] = x[i] * ct + y[i] * st;
-        }
-        for (int i = 0; i < 3; i++) {
-            y[i] = y[i] * ct - x[i] * st;
-        }
-        for (int i = 0; i < 3; i++) {
-            x[i] = xn[i];
-        }
     }
 
     /**

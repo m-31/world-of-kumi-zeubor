@@ -2,8 +2,8 @@ package com.meyling.zeubor.core.world;
 
 import com.meyling.zeubor.core.io.IoUtility;
 import com.meyling.zeubor.core.log.Log;
-import com.meyling.zeubor.core.player.AbstractPlayer;
-import com.meyling.zeubor.core.player.AbstractPlayerCreator;
+import com.meyling.zeubor.core.player.basis.AbstractPlayer;
+import com.meyling.zeubor.core.player.basis.AbstractPlayerCreator;
 import com.meyling.zeubor.core.player.brain.AdvancedBrainPlayerCreator;
 
 import java.io.File;

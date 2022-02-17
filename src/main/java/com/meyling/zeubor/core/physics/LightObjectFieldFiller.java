@@ -10,13 +10,11 @@ import java.awt.*;
 public final class LightObjectFieldFiller  {
 
     private final static int[] LIGHTS = new int[] {
-        Color.GREEN.getRGB()
-// if you want other colors just comment following in:        
-/*        ,
+        Color.GREEN.getRGB(),
         Color.RED.getRGB(),
         Color.BLUE.getRGB(),
         Color.MAGENTA.getRGB(),
-        Color.CYAN.getRGB(), */
+        Color.CYAN.getRGB(),
     };
 
     private static final double[] ZERO = new double[3];
@@ -24,12 +22,21 @@ public final class LightObjectFieldFiller  {
     private final LightObjectField field;
 
     private final LightObjectFieldCollisionDetector collisionDetector;
-    
+
+    private final int colors;
+
     public LightObjectFieldFiller(final LightObjectField field, final LightObjectFieldCollisionDetector collisionDetector) {
+        this(field, collisionDetector, LIGHTS.length);
+    }
+
+    public LightObjectFieldFiller(final LightObjectField field, final LightObjectFieldCollisionDetector collisionDetector,
+                                  final int colors) {
         this.field = field;
         this.collisionDetector = collisionDetector;
+        this.colors = colors;
+        assert(colors <= LIGHTS.length);
     }
-    
+
     public void fillBall(final int numberOfObjects) {
         fillBall(numberOfObjects, 0.5, ZERO);
     }
@@ -42,7 +49,7 @@ public final class LightObjectFieldFiller  {
         final double radiusSquare = radius * radius;
         for (int i = 0; i < numberOfObjects; i++) {
             final double[] position = new double[3];
-            int color = LIGHTS[(int) (Math.random() * LIGHTS.length)]; 
+            int color = LIGHTS[(int) (Math.random() * colors)];
             final LightObject lightObject = new AlgaLightObject(color, position);
             do {
                 for (int j = 0; j < 3; j++) {
@@ -65,7 +72,7 @@ public final class LightObjectFieldFiller  {
     public void fillSquare(final int numberOfObjects, final double radius, double[] zero) {
         for (int i = 0; i < numberOfObjects; i++) {
             final double[] position = new double[3];
-            int color = LIGHTS[(int) (Math.random() * LIGHTS.length)]; 
+            int color = LIGHTS[(int) (Math.random() * colors)];
             final LightObject lightObject = new AlgaLightObject(color, position);
             do {
                 for (int j = 0; j < 3; j++) {

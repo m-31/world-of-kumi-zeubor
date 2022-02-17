@@ -3,13 +3,15 @@ package com.meyling.zeubor.core.world;
 import com.meyling.zeubor.core.common.*;
 import com.meyling.zeubor.core.log.Log;
 import com.meyling.zeubor.core.physics.*;
-import com.meyling.zeubor.core.player.AbstractPlayer;
+import com.meyling.zeubor.core.player.basis.AbstractPlayer;
 import com.meyling.zeubor.core.player.brain.AbstractBrainPlayer;
 
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+
+import static com.meyling.zeubor.core.physics.CalculatorUtility.rotate;
 
 /**
  * A world contains a landscape and players.
@@ -39,7 +41,7 @@ public class World implements Runnable {
 	private int lastAlgae;
 
 	public static boolean debug = false;  // FIXME
-    
+
 
     public World(final long max_time, final int balls, final int squares, final double factor) {
         Log.journal(String.format("world with %d algae (with %d in cube) and factor %f", balls + squares, squares, factor));
@@ -49,17 +51,19 @@ public class World implements Runnable {
         field = new LightObjectField();
         collisionDetector = new LightObjectFieldCollisionDetector();
         final LightObjectFieldFiller filler = new LightObjectFieldFiller(field, collisionDetector);
+        // only green:
+        // final LightObjectFieldFiller filler = new LightObjectFieldFiller(field, collisionDetector, 1);
         filler.fillBall(balls);
         filler.fillSquare(squares, 0.1);
         viewPoints = new ArrayList<ViewPoint>();
         players = new ArrayList<AbstractPlayer>();
     }
 
-    public World(final long max_time, final int balls, final int squares) {
+    private World(final long max_time, final int balls, final int squares) {
         this(max_time, balls, squares, 10d);
     }    
 
-    public World(final long max_time, final int balls) {
+    private World(final long max_time, final int balls) {
         this(max_time, balls, balls);
     }
 
@@ -72,13 +76,13 @@ public class World implements Runnable {
         if (runThread == null) {
             runThread = new Thread(this);
             runThread.start();
-            Log.log("start  Thread started");
+            Log.log("start world real time iteration");
         }
     }
 
     public final synchronized void stop() {
         runThread = null;
-        Log.log("stop Thread stopped");
+        Log.log("stop world real time iteration");
     }
 
     public final synchronized boolean isRunning() {
@@ -89,6 +93,12 @@ public class World implements Runnable {
         try {
             while (isRunning()) {
                 iterate();
+                try {
+                    Thread.sleep(10);
+                } catch (InterruptedException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
             }
         } catch (Exception e) {
             Log.log("run " + e);
@@ -139,16 +149,6 @@ public class World implements Runnable {
     }
 
     public void iterate() {
-// must be synchronized, so remove and add don't interfere
-// only if you need realtime
-/*
-        try {
-            Thread.sleep(10);
-        } catch (InterruptedException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-*/
         synchronized (field) {
             time++;
             for (AbstractPlayer player : players) {
@@ -261,12 +261,12 @@ public class World implements Runnable {
         }
     }
 
-    public void drawWorld(final ViewPoint viewpoint, int width, int height, boolean clear,
+    private void drawWorld(final ViewPoint viewpoint, int width, int height, boolean clear,
             Graphics2D graphics, final double zoom, final double sensitivity) {
         drawWorld(viewpoint, 0, 0, width, height, clear, graphics, zoom, sensitivity);
     }
 
-    public void drawWorld(final ViewPoint viewpoint, int x0, int y0, int width, int height, boolean clear,
+    private void drawWorld(final ViewPoint viewpoint, int x0, int y0, int width, int height, boolean clear,
             Graphics2D graphics, final double zoom, final double sensitivity) {
         graphics.setClip(x0, y0, width, height);
         final double[] position = viewpoint.getPosition();
@@ -373,7 +373,7 @@ public class World implements Runnable {
         g.drawString(str, x0 + 5, y0 + height - 7);
     }
     
-    public void draw(LightObject lightObject, Graphics2D graphics, double xr, double yr, double size, final Color color,
+    private void draw(LightObject lightObject, Graphics2D graphics, double xr, double yr, double size, final Color color,
             final ViewPoint vp) {
         graphics.setColor(color);
         if (World.debug) {
@@ -456,23 +456,6 @@ public class World implements Runnable {
 
         // rotate around y axis
         rotate(thetay, y, z);
-    }
-
-    private void rotate(double ztheta, final double[] x, final double[] y) {
-        // rotate around z axis
-        double ct = Math.cos(ztheta);
-        double st = Math.sin(ztheta);
-
-        double[] xn = new double[3];
-        for (int i = 0; i < 3; i++) {
-            xn[i] = x[i] * ct + y[i] * st;
-        }
-        for (int i = 0; i < 3; i++) {
-            y[i] = y[i] * ct - x[i] * st;
-        }
-        for (int i = 0; i < 3; i++) {
-            x[i] = xn[i];
-        }
     }
 
 }

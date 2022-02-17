@@ -4,7 +4,7 @@ import com.meyling.zeubor.core.common.ViewPoint;
 import com.meyling.zeubor.core.common.WorldListener;
 import com.meyling.zeubor.core.physics.PhotoPlateImpl;
 import com.meyling.zeubor.core.physics.PictureImpl;
-import com.meyling.zeubor.core.player.AbstractPlayer;
+import com.meyling.zeubor.core.player.basis.AbstractPlayer;
 import com.meyling.zeubor.core.player.brain.AbstractBrainPlayer;
 
 import javax.swing.*;

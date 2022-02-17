@@ -95,7 +95,25 @@ public final class CalculatorUtility  {
         System.out.println("0=" + scalar(viewPoint.getX(), viewPoint.getZ()));
     }
 
-    
+    // rotate around z axis
+    public static void rotate(double ztheta, double[] x, double[] y) {
+        double ct = Math.cos(ztheta);
+        double st = Math.sin(ztheta);
+
+        double[] xn = new double[3];
+        for (int i = 0; i < 3; i++) {
+            xn[i] = x[i] * ct + y[i] * st;
+        }
+        for (int i = 0; i < 3; i++) {
+            y[i] = y[i] * ct - x[i] * st;
+        }
+        for (int i = 0; i < 3; i++) {
+            x[i] = xn[i];
+        }
+    }
+
+
+
     // sRGB luminance(Y) values
     public static final double rY = 0.212655;
     public static final double gY = 0.715158;

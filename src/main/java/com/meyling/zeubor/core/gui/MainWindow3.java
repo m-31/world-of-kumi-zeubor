@@ -14,7 +14,7 @@ import com.alee.laf.window.WebFrame;
 import com.alee.managers.notification.NotificationManager;
 import com.meyling.zeubor.core.common.Player;
 import com.meyling.zeubor.core.physics.CalculatorUtility;
-import com.meyling.zeubor.core.player.AbstractPlayer;
+import com.meyling.zeubor.core.player.basis.AbstractPlayer;
 import com.meyling.zeubor.core.player.brain.AbstractBrainPlayer;
 import com.meyling.zeubor.core.player.brain.BrainPlayer10;
 import com.meyling.zeubor.core.player.brain.BrainPlayer5;

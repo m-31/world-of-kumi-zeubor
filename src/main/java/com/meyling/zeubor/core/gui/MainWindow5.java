@@ -15,7 +15,7 @@ import com.alee.managers.notification.NotificationManager;
 import com.meyling.zeubor.core.common.Player;
 import com.meyling.zeubor.core.io.IoUtility;
 import com.meyling.zeubor.core.physics.CalculatorUtility;
-import com.meyling.zeubor.core.player.AbstractPlayer;
+import com.meyling.zeubor.core.player.basis.AbstractPlayer;
 import com.meyling.zeubor.core.player.brain.BrainPlayerFromJson;
 import com.meyling.zeubor.core.world.World;
 

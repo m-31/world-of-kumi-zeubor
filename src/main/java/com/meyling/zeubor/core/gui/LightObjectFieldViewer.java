@@ -3,8 +3,9 @@ package com.meyling.zeubor.core.gui;
 import com.meyling.zeubor.core.common.ObjectWithCamera;
 import com.meyling.zeubor.core.common.PhotoPlateAttributes;
 import com.meyling.zeubor.core.common.ViewPoint;
+import com.meyling.zeubor.core.physics.ManualMovement;
 import com.meyling.zeubor.core.physics.PhotoPlateImpl;
-import com.meyling.zeubor.core.world.CameraImpl;
+import com.meyling.zeubor.core.physics.CameraImpl;
 import com.meyling.zeubor.core.world.World;
 
 import javax.swing.*;

@@ -18,7 +18,7 @@
 package com.meyling.zeubor.core.main;
 
 import com.meyling.zeubor.core.gui.*;
-import com.meyling.zeubor.core.log.Log;
+import com.meyling.zeubor.core.gui_demo.ToInfinityAndBeyond;
 import joptsimple.OptionException;
 import joptsimple.OptionSet;
 import org.slf4j.event.Level;

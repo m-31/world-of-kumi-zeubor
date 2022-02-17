@@ -10,6 +10,7 @@ import com.alee.laf.label.WebLabel;
 import com.alee.laf.panel.WebPanel;
 import com.alee.laf.window.WebFrame;
 import com.alee.managers.notification.NotificationManager;
+import com.meyling.zeubor.core.gui_demo.FieldViewer;
 import com.meyling.zeubor.core.physics.CalculatorUtility;
 import com.meyling.zeubor.core.player.dumb.DumbPlayer;
 import com.meyling.zeubor.core.world.World;

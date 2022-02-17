@@ -1,4 +1,4 @@
-package com.meyling.zeubor.core.gui;
+package com.meyling.zeubor.core.gui_demo;
 
 
 import com.meyling.zeubor.core.world.World;

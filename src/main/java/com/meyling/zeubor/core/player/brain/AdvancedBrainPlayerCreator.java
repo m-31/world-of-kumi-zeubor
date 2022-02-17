@@ -17,7 +17,7 @@
  */
 package com.meyling.zeubor.core.player.brain;
 
-import com.meyling.zeubor.core.player.AbstractPlayerCreator;
+import com.meyling.zeubor.core.player.basis.AbstractPlayerCreator;
 
 
 public interface AdvancedBrainPlayerCreator extends AbstractPlayerCreator {

@@ -1,7 +1,8 @@
-package com.meyling.zeubor.core.gui;
+package com.meyling.zeubor.core.gui_demo;
 
 import com.meyling.zeubor.core.common.PhotoPlateAttributes;
 import com.meyling.zeubor.core.common.ViewPoint;
+import com.meyling.zeubor.core.physics.ManualMovement;
 import com.meyling.zeubor.core.world.World;
 
 import javax.swing.*;
@@ -34,12 +35,6 @@ public class FieldViewer extends JPanel implements Runnable,
         super();
         this.world = world;
         viewer = new SimulatorViewer(world, viewPoint, properties, getWidth(), getHeight());
-    }
-
-    public FieldViewer() {
-        super();
-        this.world = new World();
-        this.viewer = null;
     }
 
     public FieldViewer(final World world) {
