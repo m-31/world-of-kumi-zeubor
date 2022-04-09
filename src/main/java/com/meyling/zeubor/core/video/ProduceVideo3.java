@@ -15,84 +15,82 @@ import com.meyling.zeubor.core.physics.CalculatorUtility;
 import com.meyling.zeubor.core.player.basis.AbstractPlayer;
 import com.meyling.zeubor.core.player.creator.PlayerCreator;
 import com.meyling.zeubor.core.world.World;
-import org.monte.media.Format;
-import org.monte.media.avi.AVIWriter;
-import org.monte.media.math.Rational;
+
+import com.xuggle.mediatool.IMediaViewer;
+import com.xuggle.mediatool.IMediaWriter;
+import com.xuggle.mediatool.ToolFactory;
+
+import static com.xuggle.xuggler.Global.DEFAULT_TIME_UNIT;
+import static java.util.concurrent.TimeUnit.MILLISECONDS;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.awt.image.IndexColorModel;
-import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import static org.monte.media.FormatKeys.*;
-import static org.monte.media.VideoFormatKeys.*;
 
 /**
- * Use Werner Randelshofers Monte Media Library to produce videaos.
- * @see http://www.randelshofer.ch/monte/
+ * @see <a href="https://github.com/kalaspuffar/java-video/blob/main/src/main/java/CreateVideo.java">...</a>
  */
-public class ProduceVideo2 {
+public class ProduceVideo3 {
 
     /**
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        System.out.println("This is a demo of the Monte Media library.");
-        System.out.println("Copyright © Werner Randelshofer. All Rights Reserved.");
-        System.out.println("License: Creative Commons Attribution 3.0.");
-        System.out.println();
-        
-        try {
-//            test(new File("avidemo-jpg.avi"), new Format(EncodingKey, ENCODING_AVI_MJPG, DepthKey, 24, QualityKey, 1f));
-//            test(new File("avidemo-jpg-q0.5.avi"), new Format(EncodingKey, ENCODING_AVI_MJPG, DepthKey, 24, QualityKey, 0.5f));
-            test(new File("avidemo-png.avi"), new Format(EncodingKey, ENCODING_AVI_PNG, DepthKey, 24));
-//            test(new File("avidemo-raw24.avi"), new Format(EncodingKey, ENCODING_AVI_DIB, DepthKey, 24));
-//            test(new File("avidemo-raw8.avi"), new Format(EncodingKey, ENCODING_AVI_DIB, DepthKey, 8));
-//            test(new File("avidemo-rle8.avi"), new Format(EncodingKey, ENCODING_AVI_RLE, DepthKey, 8));
-//            test(new File("avidemo-tscc8.avi"), new Format(EncodingKey, ENCODING_AVI_TECHSMITH_SCREEN_CAPTURE, DepthKey, 8));
-//            test(new File("avidemo-tscc24.avi"), new Format(EncodingKey, ENCODING_AVI_TECHSMITH_SCREEN_CAPTURE, DepthKey, 24));
-//            //test(new File("avidemo-rle4.avi"), AVIOutputStreamOLD.AVIVideoFormat.RLE, 4, 1f);
 
+        try {
+            String file = "test.mov";
+            System.out.println("Writing " + file);
+            final IMediaWriter writer = ToolFactory.makeWriter(file);
+
+            writer.addListener(ToolFactory.makeViewer(
+                    IMediaViewer.Mode.VIDEO_ONLY, true,
+                    javax.swing.WindowConstants.EXIT_ON_CLOSE));
+
+            testWriting(writer);
+
+            writer.close();
         } catch (IOException ex) {
             ex.printStackTrace();
         }
     }
 
-    private static void test(File file, Format format) throws IOException {
-        testWriting(file,format);
-    }
-    private static void testWriting(File file, Format format) throws IOException {
-        System.out.println("Writing " + file);
+    private static void testWriting(IMediaWriter writer) throws IOException {
 
-        // Make the format more specific
-        format = format.prepend(MediaTypeKey, MediaType.VIDEO, //
-//                FrameRateKey, new Rational(30, 1),//
-//                WidthKey, 320 * 6, //
-//                HeightKey, 160 * 6);
-                FrameRateKey, new Rational(60, 1),//
-                WidthKey, 3840,
-                HeightKey, 2160);
+        // the clock time of the next frame
+        long nextFrameTime = 0;
+
+        // video parameters
+
+        final int videoStreamId = 0;
+        final int videoWidth = 3840;
+        final int videoHeight = 2160;
+//        final int videoWidth = 320;
+//        final int videoHeight = 200;
+        final int depth = 24;
+        final int videoStreamIndex = 0;
+//        final long frameRate = DEFAULT_TIME_UNIT.convert(500, MILLISECONDS);
+//        final long frameRate = 90;
+        final long frameRate = DEFAULT_TIME_UNIT.convert(1000 / 60, MILLISECONDS);
+
+        writer.addListener(ToolFactory.makeViewer(
+                IMediaViewer.Mode.VIDEO_ONLY, true,
+                javax.swing.WindowConstants.EXIT_ON_CLOSE));
+
+        writer.addVideoStream(videoStreamIndex, videoStreamId, videoWidth, videoHeight);
 
         // Create a buffered image for this format
-        BufferedImage img = createImage(format);
+        BufferedImage img = createImage(videoWidth, videoHeight, depth);
         Graphics2D g = img.createGraphics();
         g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-        g.setBackground(Color.white);
+        g.setBackground(Color.black);
         g.clearRect(0, 0, img.getWidth(), img.getHeight());
 
-        AVIWriter out = null;
         try {
-            // Create the writer
-            out = new AVIWriter(file);
-
-            // Add a track to the writer
-            out.addTrack(format);
-            out.setPalette(0, img.getColorModel());
-
             // initialize the animation
             World world = new World(0, 10000, 10000, 5);
 //            World world = new World(0, 100, 100, 5);
@@ -194,35 +192,29 @@ public class ProduceVideo2 {
                 
 
                 // write it to the writer
-                out.write(0, img, 1);
+                writer.encodeVideo(videoStreamIndex, img, nextFrameTime, DEFAULT_TIME_UNIT);
+                nextFrameTime += frameRate;
+
 
             }
             world = null;
 
         } finally {
-            // Close the writer
 
-            if (out != null) {
-                out.close();
-            }
-            
             // Dispose the graphics object
             g.dispose();
         }
     }
 
     /** Creates a buffered image of the specified depth with a random color palette.*/
-    private static BufferedImage createImage(Format format) {
-        int depth = format.get(DepthKey);
-        int width = format.get(WidthKey);
-        int height = format.get(HeightKey);
+    private static BufferedImage createImage(int width, int height, int depth) {
 
         Random rnd = new Random(0); // use seed 0 to get reproducable output
         BufferedImage img;
         switch (depth) {
             case 24:
             default: {
-                img = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
+                img = new BufferedImage(width, height, BufferedImage.TYPE_3BYTE_BGR);
                 break;
             }
             case 8: {

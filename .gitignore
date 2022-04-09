@@ -6,3 +6,11 @@
 
 # Avoid ignoring Gradle wrapper jar file (.jar files are usually ignored)
 !gradle-wrapper.jar
+
+# ignore created videos
+*.mov
+*.avi
+*.m4v
+
+# ignore macos specific stuff
+.DS_Store

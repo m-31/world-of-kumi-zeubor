@@ -7,6 +7,11 @@ plugins {
 repositories {
     // Use Maven Central for resolving dependencies.
     mavenCentral()
+
+    // for xuggle:
+    maven {
+        url "https://www.dcm4che.org/maven2"
+    }
 }
 
 dependencies {
@@ -39,6 +44,8 @@ dependencies {
         exclude module: 'com.springsource.javax.media.jai.core'
     }
 
+    // video production
+    implementation 'xuggle:xuggle-xuggler:5.4'
 }
 
 description = 'a living world with neural nets that eat algae'
