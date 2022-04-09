@@ -177,9 +177,9 @@ public class ProduceVideo3 {
             int width = img.getWidth() / 4 - 1;
             int height = img.getHeight() / 2 - 2;
             
-//            for (int z = 0; z < 20000; z++) {
+            for (int z = 0; z < 40000; z++) {
 //            for (int z = 0; z < 300; z++) {
-            for (int z = 0; z < 1987; z++) {
+//            for (int z = 0; z < 1987; z++) {
                 world.iterate();
                 System.out.println(z);
                 for (int i = 0; i < 4; i++) {
