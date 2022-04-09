@@ -87,7 +87,7 @@ public class ProduceVideo3 {
         BufferedImage img = createImage(videoWidth, videoHeight, depth);
         Graphics2D g = img.createGraphics();
         g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-        g.setBackground(Color.black);
+        g.setBackground(Color.white);
         g.clearRect(0, 0, img.getWidth(), img.getHeight());
 
         try {
